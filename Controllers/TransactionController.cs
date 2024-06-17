@@ -1,6 +1,7 @@
 ﻿using Bank.Interfaces;
 using Bank.Mappers;
 using Bank.Models.TransactionDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bank.Controllers {
@@ -15,6 +16,7 @@ namespace Bank.Controllers {
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> GetAll() {
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
@@ -26,6 +28,7 @@ namespace Bank.Controllers {
 		}
 
 		[HttpGet("{id:int}")]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> GetById([FromRoute] int id) {
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
@@ -39,6 +42,7 @@ namespace Bank.Controllers {
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Create([FromBody] CreateTransaction createTransaction) {
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
@@ -59,6 +63,7 @@ namespace Bank.Controllers {
 		}
 
 		[HttpPut("{id:int}")]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateTransaction updateTransaction) {
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
@@ -73,6 +78,7 @@ namespace Bank.Controllers {
 		}
 
 		[HttpDelete("{id:int}")]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Delete([FromRoute] int id) {
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);

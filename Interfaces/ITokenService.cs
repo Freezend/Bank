@@ -2,6 +2,6 @@
 
 namespace Bank.Interfaces {
 	public interface ITokenService {
-		string CreateToken(AppUser appUser);
+		Task<string> CreateTokenAsync(AppUser appUser);
 	}
 }

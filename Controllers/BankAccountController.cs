@@ -1,6 +1,7 @@
 ﻿using Bank.Interfaces;
 using Bank.Mappers;
 using Bank.Models.BankAccountDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bank.Controllers {
@@ -13,12 +14,14 @@ namespace Bank.Controllers {
             _bankAccountRepository = bankAccountRepository;
         }
 		[HttpGet]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> GetAll() {
 			var bankAccounts = await _bankAccountRepository.GetAllAsync();
 			var readBankAccounts = bankAccounts.Select(x => x.ToReadBankAccount()).ToList();
 			return Ok(readBankAccounts);
 		}
 		[HttpGet("{id:int}")]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> GetById([FromRoute] int id) {
 			var bankAccount = await _bankAccountRepository.GetByIdAsync(id);
 			if (bankAccount == null)
@@ -28,6 +31,7 @@ namespace Bank.Controllers {
 			return Ok(readBankAccount);
 		}
 		[HttpPost]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Create(CreateBankAccount createBankAccount) {
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
@@ -37,6 +41,7 @@ namespace Bank.Controllers {
 			return CreatedAtAction(nameof(GetById), new { id = bankAccount.Id }, bankAccount.ToReadBankAccount());
 		}
 		[HttpPut("{id:int}")]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBankAccount updateBankAccount) {
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
@@ -48,6 +53,7 @@ namespace Bank.Controllers {
 			return Ok(bankAccount.ToReadBankAccount());
 		}
 		[HttpDelete("{id:int}")]
+		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Delete([FromRoute] int id) {
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);

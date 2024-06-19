@@ -9,7 +9,7 @@ namespace Bank.Models.BankAccountDTOs {
 		public decimal Balance { get; set; } = decimal.Zero;
 
 		public string? AppUserId { get; set; }
-		public List<ReadTransaction> TransactionsFrom { get; set; } = [];
-		public List<ReadTransaction> TransactionsTo { get; set; } = [];
+		public List<ReadTransaction> ReadTransactionsFrom { get; set; } = [];
+		public List<ReadTransaction> ReadTransactionsTo { get; set; } = [];
 	}
 }

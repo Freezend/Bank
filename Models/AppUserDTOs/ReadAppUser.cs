@@ -5,6 +5,6 @@ namespace Bank.Models.AppUserDTOs {
 		public string UserName { get; set; } = string.Empty;
 		public string Email { get; set; } = string.Empty;
 		public string Token { get; set; } = string.Empty;
-		public List<ReadBankAccount> BankAccounts { get; set; } = [];
+		public List<ReadBankAccount> ReadBankAccounts { get; set; } = [];
 	}
 }

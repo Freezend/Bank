@@ -15,7 +15,7 @@ namespace Bank.Controllers {
 		private readonly UserManager<AppUser> _userManager;
 		private readonly IBankAccountRepository _bankAccountRepository;
         public BankAccountController(UserManager<AppUser> userManager, IBankAccountRepository bankAccountRepository) {
-            _userManager = userManager;
+			_userManager = userManager;
 			_bankAccountRepository = bankAccountRepository;
         }
 		[HttpGet]

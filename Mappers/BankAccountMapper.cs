@@ -11,8 +11,8 @@ namespace Bank.Mappers
 				Number = bankAccount.Number,
 				Balance = bankAccount.Balance,
 				AppUserId = bankAccount.AppUserId,
-				TransactionsFrom = bankAccount.TransactionsFrom.Select(x => x.ToReadTransaction()).ToList(),
-				TransactionsTo = bankAccount.TransactionsTo.Select(x => x.ToReadTransaction()).ToList(),
+				ReadTransactionsFrom = bankAccount.TransactionsFrom.Select(x => x.ToReadTransaction()).ToList(),
+				ReadTransactionsTo = bankAccount.TransactionsTo.Select(x => x.ToReadTransaction()).ToList(),
 			};
 		}
 		public static BankAccount FromCreateBankAccount(this CreateBankAccount createBankAccount) {

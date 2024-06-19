@@ -8,7 +8,7 @@ namespace Bank.Mappers {
 				UserName = appUser.UserName ?? "",
 				Email = appUser.Email ?? "",
 				Token = token,
-				BankAccounts = appUser.BankAccounts.Select(x => x.ToReadBankAccount()).ToList(),
+				ReadBankAccounts = appUser.BankAccounts.Select(x => x.ToReadBankAccount()).ToList(),
 			};
 		}
 	}

@@ -1,7 +1,9 @@
 ﻿using Bank.Interfaces;
 using Bank.Mappers;
+using Bank.Models;
 using Bank.Models.TransactionDTOs;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bank.Controllers {
@@ -47,13 +49,13 @@ namespace Bank.Controllers {
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 
-			if (!await _bankAccountRepository.CheckAsync(createTransaction.FromAccountId ?? 0))
+			if (!await _bankAccountRepository.CheckAsync(createTransaction.FromBankAccountId ?? 0))
 				return BadRequest("First BankAccount does not exist.");
 
-			if (!await _bankAccountRepository.CheckAsync(createTransaction.ToAccountId ?? 0))
+			if (!await _bankAccountRepository.CheckAsync(createTransaction.ToBankAccountId ?? 0))
 				return BadRequest("Second BankAccount does not exist.");
 
-			if (createTransaction.FromAccountId == createTransaction.ToAccountId)
+			if (createTransaction.FromBankAccountId == createTransaction.ToBankAccountId)
 				return BadRequest("BankAccounts are the same.");
 
 			var transaction = createTransaction.FromCreateTransaction();

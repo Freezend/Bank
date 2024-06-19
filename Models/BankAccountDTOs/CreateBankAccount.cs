@@ -11,5 +11,6 @@ namespace Bank.Models.BankAccountDTOs {
 		[MinLength(15, ErrorMessage = "Number must be 15 characters.")]
 		[MaxLength(34, ErrorMessage = "Number cannot be over 34 characters.")]
 		public string Number { get; set; } = string.Empty;
+		public string? AppUserId { get; set; }
 	}
 }

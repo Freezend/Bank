@@ -9,16 +9,16 @@ namespace Bank.Mappers {
 				DateTime = transaction.DateTime,
 				Description = transaction.Description,
 				Amount = transaction.Amount,
-				FromAccountId = transaction.FromAccountId,
-				ToAccountId = transaction.ToAccountId,
+				FromBankAccountId = transaction.FromBankAccountId,
+				ToBankAccountId = transaction.ToBankAccountId,
 			};
 		}
 		public static Transaction FromCreateTransaction(this CreateTransaction createTransaction) {
 			return new Transaction {
 				Description = createTransaction.Description,
 				Amount = createTransaction.Amount,
-				FromAccountId = createTransaction.FromAccountId,
-				ToAccountId = createTransaction.ToAccountId,
+				FromBankAccountId = createTransaction.FromBankAccountId,
+				ToBankAccountId = createTransaction.ToBankAccountId,
 			};
 		}
 		public static Transaction FromUpdateTransaction(this UpdateTransaction updateTransaction) {

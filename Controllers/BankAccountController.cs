@@ -1,17 +1,22 @@
 ﻿using Bank.Interfaces;
 using Bank.Mappers;
+using Bank.Models;
 using Bank.Models.BankAccountDTOs;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bank.Controllers {
 
 	[Route("api/bankAccount")]
 	[ApiController]
 	public class BankAccountController : ControllerBase {
+		private readonly UserManager<AppUser> _userManager;
 		private readonly IBankAccountRepository _bankAccountRepository;
-        public BankAccountController(IBankAccountRepository bankAccountRepository) {
-            _bankAccountRepository = bankAccountRepository;
+        public BankAccountController(UserManager<AppUser> userManager, IBankAccountRepository bankAccountRepository) {
+			_userManager = userManager;
+			_bankAccountRepository = bankAccountRepository;
         }
 		[HttpGet]
 		[Authorize(Roles = "Admin")]
@@ -35,6 +40,10 @@ namespace Bank.Controllers {
 		public async Task<IActionResult> Create(CreateBankAccount createBankAccount) {
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
+
+			var appUser = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == createBankAccount.AppUserId);
+			if (appUser == null)
+				return NotFound("User doesn't exist.");
 
 			var bankAccount = createBankAccount.FromCreateBankAccount();
 			await _bankAccountRepository.CreateAsync(bankAccount);

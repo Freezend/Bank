@@ -6,7 +6,7 @@
 
 		public decimal Amount { get; set; } = decimal.Zero;
 
-		public int? FromAccountId { get; set; }
-		public int? ToAccountId { get; set; }
+		public int? FromBankAccountId { get; set; }
+		public int? ToBankAccountId { get; set; }
 	}
 }

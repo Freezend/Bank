@@ -12,10 +12,14 @@ namespace Bank.Repository
 			_dbContext = dbContext;
 		}
 		public async Task<List<BankAccount>> GetAllAsync() {
-			return await _dbContext.BankAccounts.Include(x => x.Transactions).ToListAsync();
+			return await _dbContext.BankAccounts
+				.Include(x => x.TransactionsFrom).Include(x => x.TransactionsTo)
+				.ToListAsync();
 		}
 		public async Task<BankAccount?> GetByIdAsync(int id) {
-			return await _dbContext.BankAccounts.Include(x => x.Transactions).FirstOrDefaultAsync(x => x.Id == id);
+			return await _dbContext.BankAccounts
+				.Include(x => x.TransactionsFrom).Include(x => x.TransactionsTo)
+				.FirstOrDefaultAsync(x => x.Id == id);
 		}
 		public async Task<BankAccount> CreateAsync(BankAccount bankAccount) {
 			await _dbContext.BankAccounts.AddAsync(bankAccount);
@@ -37,12 +41,12 @@ namespace Bank.Repository
 			if (bankAccount == null)
 				return null;
 
-			var transactionsFromAccount = await _dbContext.Transactions.Where(x => x.FromAccountId == id).ToListAsync();
-			var transactionsToAccount = await _dbContext.Transactions.Where(x => x.ToAccountId == id).ToListAsync();
-			foreach (var t in transactionsFromAccount)
-				t.FromAccountId = null;
-			foreach (var t in transactionsToAccount)
-				t.ToAccountId = null;
+			var transactionsFromBankAccount = await _dbContext.Transactions.Where(x => x.FromBankAccountId == id).ToListAsync();
+			var transactionsToBankAccount = await _dbContext.Transactions.Where(x => x.ToBankAccountId == id).ToListAsync();
+			foreach (var t in transactionsFromBankAccount)
+				t.FromBankAccountId = null;
+			foreach (var t in transactionsToBankAccount)
+				t.ToBankAccountId = null;
 
 			_dbContext.BankAccounts.Remove(bankAccount);
 			await _dbContext.SaveChangesAsync();

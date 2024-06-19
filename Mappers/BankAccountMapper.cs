@@ -10,13 +10,16 @@ namespace Bank.Mappers
 				Name = bankAccount.Name,
 				Number = bankAccount.Number,
 				Balance = bankAccount.Balance,
-				Transactions = bankAccount.Transactions.Select(x => x.ToReadTransaction()).ToList(),
+				AppUserId = bankAccount.AppUserId,
+				ReadTransactionsFrom = bankAccount.TransactionsFrom.Select(x => x.ToReadTransaction()).ToList(),
+				ReadTransactionsTo = bankAccount.TransactionsTo.Select(x => x.ToReadTransaction()).ToList(),
 			};
 		}
 		public static BankAccount FromCreateBankAccount(this CreateBankAccount createBankAccount) {
 			return new BankAccount {
 				Name = createBankAccount.Name,
 				Number = createBankAccount.Number,
+				AppUserId = createBankAccount.AppUserId,
 			};
 		}
 		public static BankAccount FromUpdateBankAccount(this UpdateBankAccount updateBankAccount) {

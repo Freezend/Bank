@@ -9,6 +9,9 @@ namespace Bank.Models {
 		[Column(TypeName = "decimal(18,2)")]
 		public decimal Balance { get; set; } = decimal.Zero;
 
-        public List<Transaction> Transactions { get; set; } = [];
+		public string? AppUserId { get; set; }
+		public AppUser? AppUser { get; set; }
+        public List<Transaction> TransactionsFrom { get; set; } = [];
+		public List<Transaction> TransactionsTo { get; set; } = [];
     }
 }

@@ -9,7 +9,7 @@ namespace Bank.Models.TransactionDTOs {
 		[Range(0.01, 1000000000.00)]
 		public decimal Amount { get; set; } = decimal.Zero;
 
-		public int? FromAccountId { get; set; }
-		public int? ToAccountId { get; set; }
+		public int? FromBankAccountId { get; set; }
+		public int? ToBankAccountId { get; set; }
 	}
 }

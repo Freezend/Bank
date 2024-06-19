@@ -16,19 +16,23 @@ namespace Bank.Data
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<Transaction>()
-				.HasOne(t => t.FromAccount)
-				.WithMany(a => a.Transactions)
-				.HasForeignKey(t => t.FromAccountId)
-				.IsRequired(false)
+			modelBuilder.Entity<BankAccount>()
+				.HasMany(b => b.TransactionsFrom)
+				.WithOne(t => t.FromBankAccount)
+				.HasForeignKey(t => t.FromBankAccountId)
 				.OnDelete(DeleteBehavior.Restrict);
 
-			modelBuilder.Entity<Transaction>()
-				.HasOne(t => t.ToAccount)
-				.WithMany()
-				.HasForeignKey(t => t.ToAccountId)
-				.IsRequired(false)
+			modelBuilder.Entity<BankAccount>()
+				.HasMany(b => b.TransactionsTo)
+				.WithOne(t => t.ToBankAccount)
+				.HasForeignKey(t => t.ToBankAccountId)
 				.OnDelete(DeleteBehavior.Restrict);
+
+			modelBuilder.Entity<AppUser>()
+				.HasMany(u => u.BankAccounts)
+				.WithOne(b => b.AppUser)
+				.HasForeignKey(b => b.AppUserId)
+				.OnDelete(DeleteBehavior.Cascade);
 
 			List<IdentityRole> roles = [
 				new IdentityRole {

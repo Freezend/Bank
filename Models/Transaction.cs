@@ -10,9 +10,9 @@ namespace Bank.Models
 		[Column(TypeName = "decimal(18,2)")]
 		public decimal Amount { get; set; } = decimal.Zero;
 
-		public int? FromAccountId { get; set; }
-		public BankAccount? FromAccount { get; set; }
-		public int? ToAccountId { get; set; }
-		public BankAccount? ToAccount { get; set; }
+		public int? FromBankAccountId { get; set; }
+		public BankAccount? FromBankAccount { get; set; }
+		public int? ToBankAccountId { get; set; }
+		public BankAccount? ToBankAccount { get; set; }
 	}
 }
